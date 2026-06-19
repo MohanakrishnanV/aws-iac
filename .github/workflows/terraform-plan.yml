@@ -1,0 +1,36 @@
+name: 'Terraform Plan'
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run the Terraform plan against'
+        required: true
+        default: 'develop'
+        type: choice
+        options:
+          - develop
+          - stage
+          - prod
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-plan:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init -backend-config=config/${{ github.event.inputs.environment }}.tfvars
+
+    - name: Terraform Plan
+      run: terraform plan -var-file=config/${{ github.event.inputs.environment }}.tfvars
