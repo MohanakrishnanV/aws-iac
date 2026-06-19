@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   terraform-plan:
-    name: 'Terraform Plan to ${{ github.event.inputs.environment }} from ${{ github.ref_name }}'
+    name: 'Plan for ${{ github.event.inputs.environment }} env from ${{ github.ref_name }} branch'
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     
