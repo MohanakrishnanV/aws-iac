@@ -12,7 +12,7 @@ permissions:
 
 jobs:  
   apply:
-    name: 'Terraform'
+    name: 'Terraform Apply from ${{ github.ref_name }} branch'
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
     steps:
